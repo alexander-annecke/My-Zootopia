@@ -5,17 +5,21 @@ def load_data(file_path):
     with open(file_path, "r") as handle:
         return json.load(handle)
 
-animals_data = load_data("animals_data.json")
+data = load_data("animals_data.json")
 
 
-output = ''
-for animal in animals_data:
-    characteristics = animal.get("characteristics", {})
+output = ""
 
-    output += f'Name: {animal.get("name", "Unknown")}\n'
-    output += f'Diet: {characteristics.get("diet", "Unknown")}\n'
-    output += f'Location: {animal.get("locations", ["Unknown"])[0]}\n'
-    output += f'Type: {characteristics.get("type", "Unknown")}\n'
+for animal_data in data:
+    characteristics = animal_data.get("characteristics", {})
+    locations = animal_data.get("locations", [])
+
+    output += '<li class="cards__item">'
+    output += f"Name: {animal_data.get('name', 'Unknown')}<br/>\n"
+    output += f"Diet: {characteristics.get('diet', 'Unknown')}<br/>\n"
+    output += f"Location: {locations[0] if locations else 'Unknown'}<br/>\n"
+    output += f"Type: {characteristics.get('type', 'Unknown')}<br/>\n"
+    output += "</li>\n"
 
 print(output)
 
